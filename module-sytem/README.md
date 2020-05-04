@@ -1,8 +1,5 @@
 # Node Module System
 
-- creating / loading a module.
-
-  > in a module you can export an object of methods or a single function
 
 ## Usefull Node built in modules.
 
@@ -16,13 +13,14 @@
 
 ### Node Core
 
-#### So, in this section, you learned that:
+#### In this section, you learned that:
 
 - We don’t have the window object in Node.
 - The global object in Node is “global”.
 - Unlike browser applications, variables we define are not added to the “global” object.
 - Every file in a Node application is a module. Node automatically wraps the code in each file with an IIFE (Immediately-invoked Function Expression) to create scope. So, variables and functions defined in one file are only scoped to that file and not visible to other files unless explicitly exported.
 - To export a variable or function from a module, you need to add them to module.exports: module.exports.sayHello = sayHello;
+  > You can export an object of methods or a single function
 - To load a module, use the require function. This function returns the module.exports object exported from the target module: const logger = require(‘./logger’);
 - Node has a few built-in modules that enable us to work with the file system, path objects, network, operating system, etc.
 - EventEmitter is one of the core classes in Node that allows us to raise (emit) and handle events. Several built-in classes in Node derive from EventEmitter.
