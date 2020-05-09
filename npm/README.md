@@ -30,3 +30,8 @@ npm outdated
 ## Update packages
 npm update
 - To install/uninstall packages globally, use -g flag.
+
+
+### TIPS
+- npm init --yes
+> avoid all the questions when creating a package.json
