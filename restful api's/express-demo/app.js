@@ -9,16 +9,27 @@ const app = express(); //this functions return a object of type express. By conv
 // app.put();
 // app.delete();
 
+const courses = [
+  { id: 1, name: "course1" },
+  { id: 2, name: "course2" },
+  { id: 3, name: "course3" },
+];
+
 app.get("/", (req, res) => {
   res.send("Hello world...");
 });
 
 app.get("/api/courses", (req, res) => {
-  res.send([1, 2, 3]);
+  res.send(courses);
 });
 
 app.get("/api/courses/:id", (req, res) => {
-  res.send(req.params.id);
+  const course = courses.find(course => {
+    return course.id === parseInt(req.params.id);
+  });
+  !course
+    ? res.status(404).send("The course with the given id was not found..")
+    : res.send(course);
 });
 
 //PORT
