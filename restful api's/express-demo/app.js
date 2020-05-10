@@ -1,6 +1,8 @@
 const express = require("express");
 //console.log(typeof express);
-const app = express(); //this functions return a object of type express. By convention we call this object app
+const app = express(); //this functions return a object of type express. By convention we call this object app#
+
+app.use(express.json());
 //console.log(app);
 
 //usefull methods...
@@ -32,6 +34,14 @@ app.get("/api/courses/:id", (req, res) => {
     : res.send(course);
 });
 
+app.post("/api/courses", (req, res) => {
+  const course = {
+    id: courses.length + 1,
+    name: req.body.name,
+  };
+  courses.push(course);
+  res.send(course);
+});
 //PORT
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
