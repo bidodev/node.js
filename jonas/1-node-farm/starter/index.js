@@ -26,8 +26,15 @@ const url = require("url");
 
 //SERVER
 const server = http.createServer((req, res) => {
-  console.log(req.url);
-  res.end("Hello from the server..");
+  const url = req.url;
+  if (url === "/overview") {
+    res.end("This is the overview..");
+  } else if (url === "/product") {
+    res.end("This is the product");
+  } else {
+    res.writeHead(404, { "Content-Type": "text/html" });
+    res.end("<h1>Page not found</h1>");
+  }
 });
 
 server.listen(3000, "127.0.0.1", () => {
