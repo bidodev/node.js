@@ -1,7 +1,8 @@
-const fs = require("fs");
-const http = require("http");
-const url = require("url");
-const replace = require("./modules/replace");
+const fs = require('fs');
+const http = require('http');
+const url = require('url');
+const replace = require('./modules/replace');
+const slugify = require('slugify');
 
 /////SYNC (blocking code)
 //reading text from files
@@ -26,55 +27,57 @@ const replace = require("./modules/replace");
 // });
 
 //top level code..
-const tempOverview = fs.readFileSync(
-  `${__dirname}/templates/template-overview.html`,
-  "utf-8"
-);
-const tempCard = fs.readFileSync(
-  `${__dirname}/templates/template-card.html`,
-  "utf-8"
-);
-const tempProduct = fs.readFileSync(
-  `${__dirname}/templates/template-product.html`,
-  "utf-8"
-);
-const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+const tempOverview = fs.readFileSync(`${__dirname}/templates/template-overview.html`, 'utf-8');
+const tempCard = fs.readFileSync(`${__dirname}/templates/template-card.html`, 'utf-8');
+const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.html`, 'utf-8');
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const parsed = JSON.parse(data);
+
+//const slugs = parsed.map((el) => slugify(el.productName, { lower: true }));
 
 //SERVER
 const server = http.createServer((req, res) => {
   const { query, pathname } = url.parse(req.url, true);
 
   // Overview page
-  if (pathname === "/" || pathname === "/overview") {
-    res.writeHead(200, { "Content-type": "text/html" });
+  if (pathname === '/' || pathname === '/overview') {
+    res.writeHead(200, {
+      'Content-type': 'text/html',
+    });
 
-    const cards = parsed.map(element => replace(tempCard, element)).join("");
-    const output = tempOverview.replace("{%PRODUCT_CARDS%}", cards);
+    const cards = parsed.map((element) => replace(tempCard, element)).join('');
+    const output = tempOverview.replace('{%PRODUCT_CARDS%}', cards);
     res.end(output);
   }
 
   //product page
-  else if (pathname === "/product") {
-    res.writeHead(200, { "Content-type": "text/html" });
+  else if (pathname === '/product') {
+    res.writeHead(200, {
+      'Content-type': 'text/html',
+    });
     const product = parsed[query.id];
     const output = replace(tempProduct, product);
 
     res.end(output);
   }
+
   //this is the api
-  else if (pathname === "/api") {
-    res.writeHead(200, { "Content-Type": "application/json" });
+  else if (pathname === '/api') {
+    res.writeHead(200, {
+      'Content-Type': 'application/json',
+    });
     res.end(data);
   }
 
   //404
   else {
-    res.writeHead(404, { "Content-Type": "text/html" });
-    res.end("<h1>Page not found</h1>");
+    res.writeHead(404, {
+      'Content-Type': 'text/html',
+    });
+    res.end('<h1>Page not found</h1>');
   }
 });
 
-server.listen(3000, "127.0.0.1", () => {
-  console.log("Listening to requests on port 3000");
+server.listen(3000, '127.0.0.1', () => {
+  console.log('Listening to requests on port 3000');
 });
