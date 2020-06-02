@@ -19,10 +19,10 @@
 //   );
 // }
 
-myNumbers = [1, 2, 3, 4, 5, 6, 8, 9];
+const myNumbers = [1, 2, 3, 10, 5, 6, 8, 9];
 
 const returnMedian = arr => {
-  const sorted = arr.sort();
+  const sorted = arr.sort((a, b) => a - b);
   const medianIndex = (sorted.length - 1) / 2;
 
   return medianIndex % 2 == 0
