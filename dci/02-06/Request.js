@@ -10,7 +10,7 @@ class Request {
   async getWeatherData() {
     try {
       const data = axios(
-        `http://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&APPID=${this.appKey}`
+        `${this.endPoint}weather?q=${this.city}&units=metric&APPID=${this.appKey}`
       );
       const res = await data;
       this.result = res;
