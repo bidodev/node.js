@@ -1,4 +1,4 @@
-//console.log("Hi");
+#!/usr/bin/env node
 const weather = require("./lib/weather");
 const args = process.argv.slice(2);
 // npm start Berlin Germany
